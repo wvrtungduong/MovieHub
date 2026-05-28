@@ -1,0 +1,19 @@
+# Node / Angular
+node_modules/
+dist/
+build/
+
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+
+.DS_Store
+Thumbs.db
+copilot-instructions.md
+*.instructions.md
+
+coverage/
+/.angular/
+*.log
