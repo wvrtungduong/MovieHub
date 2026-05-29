@@ -1,0 +1,10 @@
+[
+  {
+    "id": 1,
+    "title": "Example Movie",
+    "genre": "Drama",
+    "year": 2020,
+    "posterUrl": "https://via.placeholder.com/200x300",
+    "description": "A sample movie used for development."
+  }
+]
