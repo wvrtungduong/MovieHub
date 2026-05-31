@@ -1,5 +1,7 @@
-<div class="movie-card">
-  <img src="" alt="poster" />
-  <h3>Title</h3>
-  <p>Genre • Year</p>
+<div class="movie-card" *ngIf="movie">
+  <img [src]="movie.poster || '/assets/images/placeholder.png'" alt="poster" />
+  <h3>{{ movie.title }}</h3>
+  <p>{{ movie.genre }} • {{ movie.year }}</p>
+
+  <app-review-list [movieId]="movie.id"></app-review-list>
 </div>

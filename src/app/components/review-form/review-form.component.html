@@ -1,0 +1,17 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="review-form">
+  <div>
+    <label>Name</label>
+    <input formControlName="author" />
+  </div>
+  <div>
+    <label>Rating</label>
+    <select formControlName="rating">
+      <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{n}}</option>
+    </select>
+  </div>
+  <div>
+    <label>Comment</label>
+    <textarea formControlName="comment"></textarea>
+  </div>
+  <button type="submit" [disabled]="form.invalid">Add review</button>
+</form>

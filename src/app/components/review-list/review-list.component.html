@@ -1,0 +1,16 @@
+<div class="review-list">
+  <app-review-form [movieId]="movieId" (added)="onAdded()"></app-review-form>
+
+  <div *ngIf="reviews.length === 0">No reviews yet — be the first to review.</div>
+
+  <ul>
+    <li *ngFor="let r of reviews">
+      <div><strong>{{r.author}}</strong> — {{r.rating}}/5</div>
+      <div>{{r.comment}}</div>
+      <div class="meta">
+        <small>{{r.createdAt | date:'short'}}</small>
+        <button (click)="upvote(r)">▲ {{r.upvotes || 0}}</button>
+      </div>
+    </li>
+  </ul>
+</div>
