@@ -26,5 +26,8 @@
       }
     }
   },
-  "defaultProject": "movie-hub"
+  "defaultProject": "movie-hub",
+  "cli": {
+    "analytics": false
+  }
 }

@@ -1,0 +1,19 @@
+<div *ngIf="movie; else loading" class="movie-detail">
+  <div class="header">
+    <img [src]="movie.poster || '/assets/images/placeholder.png'" alt="poster" />
+    <div class="info">
+      <h1>{{ movie.title }}</h1>
+      <p><strong>{{ movie.genre }}</strong> • {{ movie.year }}</p>
+      <p>{{ movie.description }}</p>
+    </div>
+  </div>
+
+  <section class="reviews">
+    <h2>Reviews</h2>
+    <app-review-list [movieId]="movie.id"></app-review-list>
+  </section>
+</div>
+
+<ng-template #loading>
+  <div>Loading...</div>
+</ng-template>
