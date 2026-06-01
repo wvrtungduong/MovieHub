@@ -1,9 +1,11 @@
 <div class="movie-card" *ngIf="movie">
   <a [routerLink]="['/movie', movie.id]">
-    <img [src]="movie.poster || '/assets/images/placeholder.png'" alt="poster" />
+    <img [src]="movie.posterUrl || '/assets/images/placeholder.png'" alt="poster" />
   </a>
-  <h3><a [routerLink]="['/movie', movie.id]">{{ movie.title }}</a></h3>
+  <div class="movie-card__topline">
+    <h3><a [routerLink]="['/movie', movie.id]">{{ movie.title }}</a></h3>
+    <button type="button" (click)="toggleFavorite()">{{ isFavorite ? '★ Favorite' : '☆ Favorite' }}</button>
+  </div>
   <p>{{ movie.genre }} • {{ movie.year }}</p>
-
-  <app-review-list [movieId]="movie.id"></app-review-list>
+  <p>Average rating: {{ movie.averageRating || 'N/A' }}</p>
 </div>
