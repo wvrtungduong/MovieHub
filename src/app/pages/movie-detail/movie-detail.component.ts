@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
+import { Movie } from '../../models/movie';
 
 @Component({
   selector: 'app-movie-detail',
   templateUrl: './movie-detail.component.html'
 })
 export class MovieDetailComponent implements OnInit {
-  movie: any | null = null;
+  movie: Movie | null = null;
 
   constructor(private route: ActivatedRoute, private movieService: MovieService, private router: Router) {}
 
@@ -18,7 +19,7 @@ export class MovieDetailComponent implements OnInit {
       return;
     }
 
-    this.movieService.getMovies().then((list: any[]) => {
+    this.movieService.getMovies().then((list: Movie[]) => {
       this.movie = list.find(m => String(m.id) === id) || null;
       if (!this.movie) {
         this.router.navigate(['/']);

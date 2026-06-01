@@ -1,9 +1,10 @@
 <div *ngIf="movie; else loading" class="movie-detail">
   <div class="header">
-    <img [src]="movie.poster || '/assets/images/placeholder.png'" alt="poster" />
+    <img [src]="movie.posterUrl || '/assets/images/placeholder.png'" alt="poster" />
     <div class="info">
       <h1>{{ movie.title }}</h1>
       <p><strong>{{ movie.genre }}</strong> • {{ movie.year }}</p>
+      <p>Average rating: {{ movie.averageRating || 'N/A' }}</p>
       <p>{{ movie.description }}</p>
     </div>
   </div>

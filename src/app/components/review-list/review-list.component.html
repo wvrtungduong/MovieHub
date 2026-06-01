@@ -9,7 +9,7 @@
       <div>{{r.comment}}</div>
       <div class="meta">
         <small>{{r.createdAt | date:'short'}}</small>
-        <button (click)="upvote(r)">▲ {{r.upvotes || 0}}</button>
+        <button (click)="upvote(r)">👍 {{r.upvotes || 0}}</button>
       </div>
     </li>
   </ul>
