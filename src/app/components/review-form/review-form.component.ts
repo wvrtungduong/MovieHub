@@ -17,14 +17,17 @@ export class ReviewFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      author: ['Anonymous', Validators.required],
+      author: ['', [Validators.required, Validators.minLength(2)]],
       rating: [5, [Validators.required, Validators.min(1), Validators.max(5)]],
-      comment: ['', Validators.required]
+      comment: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
 
   submit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     const v = this.form.value;
     const all = this.storage.get<Review[]>('reviews', []);
     const review: Review = {
@@ -38,7 +41,19 @@ export class ReviewFormComponent implements OnInit {
     };
     all.push(review);
     this.storage.set('reviews', all);
-    this.form.reset({ author: 'Anonymous', rating: 5, comment: '' });
+    this.form.reset({ author: '', rating: 5, comment: '' });
     this.added.emit();
+  }
+
+  get author() {
+    return this.form.get('author');
+  }
+
+  get rating() {
+    return this.form.get('rating');
+  }
+
+  get comment() {
+    return this.form.get('comment');
   }
 }

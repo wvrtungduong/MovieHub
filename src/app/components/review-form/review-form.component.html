@@ -1,17 +1,23 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="review-form">
   <div>
     <label>Name</label>
-    <input formControlName="author" />
+    <input formControlName="author" placeholder="Your name" />
+    <small *ngIf="author?.touched && author?.hasError('required')">Name is required.</small>
+    <small *ngIf="author?.touched && author?.hasError('minlength')">Name must be at least 2 characters.</small>
   </div>
   <div>
     <label>Rating</label>
     <select formControlName="rating">
       <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{n}}</option>
     </select>
+    <small *ngIf="rating?.touched && rating?.hasError('required')">Rating is required.</small>
+    <small *ngIf="rating?.touched && (rating?.hasError('min') || rating?.hasError('max'))">Rating must be between 1 and 5.</small>
   </div>
   <div>
     <label>Comment</label>
-    <textarea formControlName="comment"></textarea>
+    <textarea formControlName="comment" placeholder="Write at least 10 characters..."></textarea>
+    <small *ngIf="comment?.touched && comment?.hasError('required')">Comment is required.</small>
+    <small *ngIf="comment?.touched && comment?.hasError('minlength')">Comment must be at least 10 characters.</small>
   </div>
   <button type="submit" [disabled]="form.invalid">Add review</button>
 </form>
