@@ -5,8 +5,7 @@
     "genre": "Sci-Fi",
     "year": 2018,
     "posterUrl": "https://picsum.photos/id/1011/800/1200",
-    "description": "A data curator discovers that the city's archives are hiding memories from a future that never happened.",
-    "averageRating": 0
+    "description": "A data curator discovers that the city's archives are hiding memories from a future that never happened."
   },
   {
     "id": 2,
@@ -14,8 +13,7 @@
     "genre": "Thriller",
     "year": 2021,
     "posterUrl": "https://picsum.photos/id/1015/800/1200",
-    "description": "A dockworker gets pulled into a late-night smuggling ring after a missing shipment turns up with his name on it.",
-    "averageRating": 0
+    "description": "A dockworker gets pulled into a late-night smuggling ring after a missing shipment turns up with his name on it."
   },
   {
     "id": 3,
@@ -23,8 +21,7 @@
     "genre": "Romance",
     "year": 2019,
     "posterUrl": "https://picsum.photos/id/1025/800/1200",
-    "description": "Two neighbors slowly rebuild their routines, their goals, and their trust during a long summer on the same street.",
-    "averageRating": 0
+    "description": "Two neighbors slowly rebuild their routines, their goals, and their trust during a long summer on the same street."
   },
   {
     "id": 4,
@@ -32,8 +29,7 @@
     "genre": "Action",
     "year": 2022,
     "posterUrl": "https://picsum.photos/id/1035/800/1200",
-    "description": "A former stunt driver has one night to stop a broadcast hijack before the whole city loses power.",
-    "averageRating": 0
+    "description": "A former stunt driver has one night to stop a broadcast hijack before the whole city loses power."
   },
   {
     "id": 5,
@@ -41,7 +37,6 @@
     "genre": "Drama",
     "year": 2017,
     "posterUrl": "https://picsum.photos/id/1043/800/1200",
-    "description": "At a family festival, three generations confront the stories they kept alive and the ones they never told.",
-    "averageRating": 0
+    "description": "At a family festival, three generations confront the stories they kept alive and the ones they never told."
   }
 ]

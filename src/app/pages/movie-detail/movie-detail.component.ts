@@ -27,4 +27,10 @@ export class MovieDetailComponent implements OnInit {
       }
     }).catch(() => this.router.navigate(['/']));
   }
+
+  onAverageChanged(averageRating: number): void {
+    if (this.movie) {
+      this.movie = { ...this.movie, averageRating };
+    }
+  }
 }

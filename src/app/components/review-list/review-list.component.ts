@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { Review } from '../../models/review';
-import { ReviewService } from '../../services/review.service';
 
 @Component({
   selector: 'app-review-list',
@@ -9,20 +9,37 @@ import { ReviewService } from '../../services/review.service';
 })
 export class ReviewListComponent implements OnInit {
   @Input() movieId!: string;
+  @Output() averageChanged = new EventEmitter<number>();
   reviews: Review[] = [];
 
-  constructor(private reviewService: ReviewService) {}
+  constructor(private storage: LocalStorageService) {}
 
   ngOnInit(): void {
+    this.storage.seedMockReviews();
     this.load();
   }
 
   load(): void {
-    this.reviews = this.reviewService.getReviewsForMovie(this.movieId);
+    const all = this.storage.getReviews();
+    this.reviews = all.filter(r => r.movieId === this.movieId).sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    this.averageChanged.emit(this.storage.getAverageRating(this.movieId));
   }
 
   upvote(review: Review): void {
-    this.reviewService.upvote(review.id);
+    const votedReviewIds = this.storage.getVotedReviewIds();
+    if (votedReviewIds.includes(review.id)) {
+      return;
+    }
+
+    const all = this.storage.getReviews();
+    const found = all.find(item => item.id === review.id);
+    if (!found) {
+      return;
+    }
+
+    found.upvotes = (found.upvotes || 0) + 1;
+    this.storage.saveReviews(all);
+    this.storage.saveVotedReviewIds([...votedReviewIds, review.id]);
     this.load();
   }
 
@@ -31,6 +48,6 @@ export class ReviewListComponent implements OnInit {
   }
 
   hasVoted(reviewId: string): boolean {
-    return this.reviewService.hasVoted(reviewId);
+    return this.storage.getVotedReviewIds().includes(reviewId);
   }
 }

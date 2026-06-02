@@ -10,14 +10,20 @@ import { Movie } from '../../models/movie';
 export class MovieCardComponent implements OnInit {
 	@Input() movie!: Movie;
 	isFavorite = false;
+	averageRating = 0;
 
 	constructor(private favorites: FavoriteService) {}
 
 	ngOnInit(): void {
 		this.isFavorite = this.favorites.isFavorite(Number(this.movie?.id));
+		this.averageRating = this.movie.averageRating || 0;
 	}
 
 	toggleFavorite(): void {
 		this.isFavorite = this.favorites.toggle(Number(this.movie.id));
+	}
+
+	onAverageChanged(averageRating: number): void {
+		this.averageRating = averageRating;
 	}
 }

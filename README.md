@@ -1,6 +1,6 @@
 # MovieHub
 
-Minimal scaffold for the MovieHub Angular capstone project (placeholder files).
+Minimal scaffold for the MovieHub Angular capstone project.
 
 Run:
 

@@ -7,5 +7,7 @@
     <button type="button" (click)="toggleFavorite()">{{ isFavorite ? '★ Favorite' : '☆ Favorite' }}</button>
   </div>
   <p>{{ movie.genre }} • {{ movie.year }}</p>
-  <p>Average rating: {{ movie.averageRating || 'N/A' }}</p>
+  <p>Average rating: {{ averageRating || 'N/A' }}</p>
+
+  <app-review-list [movieId]="movie.id" (averageChanged)="onAverageChanged($event)"></app-review-list>
 </div>
