@@ -1,0 +1,33 @@
+.movie-detail {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.movie-detail .header {
+  display: grid;
+  grid-template-columns: minmax(180px, 260px) 1fr;
+  gap: 1.25rem;
+  align-items: start;
+  padding: 1rem;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+}
+
+.movie-detail img {
+  width: 100%;
+  border-radius: 14px;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.movie-detail .info p {
+  margin: 0.35rem 0 0;
+  color: #555;
+}
+
+.movie-detail .reviews {
+  display: grid;
+  gap: 0.75rem;
+}
