@@ -36,7 +36,9 @@ export class ReviewService {
   }
 
   getAverageRating(movieId: string | number): number {
-    const reviews = this.getReviewsForMovie(movieId).filter(review => this.isValidRating(review.rating));
+    const reviews = this.getReviewsForMovie(movieId)
+      .map(review => ({ ...review, rating: this.coerceRating(review.rating) }))
+      .filter(review => this.isValidRating(review.rating));
     if (reviews.length === 0) {
       return 0;
     }
@@ -79,8 +81,21 @@ export class ReviewService {
     return typeof rating === 'number' && Number.isFinite(rating) && rating >= 1 && rating <= 5;
   }
 
+  private coerceRating(rating: unknown): number {
+    if (typeof rating === 'number') {
+      return rating;
+    }
+
+    if (typeof rating === 'string' && rating.trim() !== '') {
+      return Number(rating);
+    }
+
+    return Number.NaN;
+  }
+
   private normalizeReview(review: Review): Review {
-    const normalizedRating = this.isValidRating(review.rating) ? review.rating : 0;
+    const numericRating = this.coerceRating(review.rating);
+    const normalizedRating = this.isValidRating(numericRating) ? numericRating : 0;
     return {
       ...review,
       movieId: String(review.movieId),

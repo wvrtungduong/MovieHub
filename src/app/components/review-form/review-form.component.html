@@ -8,7 +8,7 @@
   <div>
     <label>Rating</label>
     <select formControlName="rating">
-      <option *ngFor="let n of [1,2,3,4,5]" [value]="n">{{n}}</option>
+      <option *ngFor="let n of [1,2,3,4,5]" [ngValue]="n">{{n}}</option>
     </select>
     <small *ngIf="rating?.touched && rating?.hasError('required')">Rating is required.</small>
     <small *ngIf="rating?.touched && (rating?.hasError('min') || rating?.hasError('max'))">Rating must be between 1 and 5.</small>

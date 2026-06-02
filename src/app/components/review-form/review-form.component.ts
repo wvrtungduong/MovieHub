@@ -34,7 +34,7 @@ export class ReviewFormComponent implements OnInit {
       id: Math.random().toString(36).slice(2, 9),
       movieId: this.movieId,
       author: v.author,
-      rating: v.rating,
+      rating: Number(v.rating),
       comment: v.comment,
       upvotes: 0,
       createdAt: new Date().toISOString()
