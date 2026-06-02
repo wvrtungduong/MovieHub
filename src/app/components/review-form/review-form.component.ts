@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LocalStorageService } from '../../services/local-storage.service';
 import { Review } from '../../models/review';
+import { ReviewService } from '../../services/review.service';
 
 @Component({
   selector: 'app-review-form',
@@ -14,7 +14,7 @@ export class ReviewFormComponent implements OnInit {
 
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private storage: LocalStorageService) {}
+  constructor(private fb: FormBuilder, private reviewService: ReviewService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -30,7 +30,6 @@ export class ReviewFormComponent implements OnInit {
       return;
     }
     const v = this.form.value;
-    const all = this.storage.get<Review[]>('reviews', []);
     const review: Review = {
       id: Math.random().toString(36).slice(2, 9),
       movieId: this.movieId,
@@ -40,8 +39,7 @@ export class ReviewFormComponent implements OnInit {
       upvotes: 0,
       createdAt: new Date().toISOString()
     };
-    all.push(review);
-    this.storage.set('reviews', all);
+    this.reviewService.addReview(review);
     this.form.reset({ author: '', rating: 5, comment: '' });
     this.added.emit();
   }
