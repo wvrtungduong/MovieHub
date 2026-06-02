@@ -1,0 +1,14 @@
+<section class="favorites-page">
+  <div class="page-header">
+    <h2>Favorite Movies</h2>
+    <p>Your saved picks are shown here.</p>
+  </div>
+
+  <div *ngIf="favoriteMovies.length === 0" class="empty-state">
+    You have not marked any favorites yet.
+  </div>
+
+  <div class="movie-grid" *ngIf="favoriteMovies.length > 0">
+    <app-movie-card *ngFor="let movie of favoriteMovies" [movie]="movie"></app-movie-card>
+  </div>
+</section>

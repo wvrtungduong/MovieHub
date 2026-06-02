@@ -1,0 +1,20 @@
+.favorites-page {
+  padding: 1rem 0;
+}
+
+.page-header {
+  margin-bottom: 1rem;
+}
+
+.empty-state {
+  padding: 1rem;
+  border: 1px dashed #c8c8c8;
+  border-radius: 12px;
+  color: #555;
+}
+
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}

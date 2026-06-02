@@ -8,9 +8,10 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
 import { ReviewListComponent } from './components/review-list/review-list.component';
 import { ReviewFormComponent } from './components/review-form/review-form.component';
 import { MovieDetailComponent } from './pages/movie-detail/movie-detail.component';
+import { FavoritesComponent } from './pages/favorites/favorites.component';
 
 @NgModule({
-	declarations: [AppComponent, MovieListComponent, MovieCardComponent, ReviewListComponent, ReviewFormComponent, MovieDetailComponent],
+	declarations: [AppComponent, MovieListComponent, MovieCardComponent, ReviewListComponent, ReviewFormComponent, MovieDetailComponent, FavoritesComponent],
 	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
 	bootstrap: [AppComponent]
 })
