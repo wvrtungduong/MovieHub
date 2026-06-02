@@ -4,7 +4,7 @@
     <div class="info">
       <h1>{{ movie.title }}</h1>
       <p><strong>{{ movie.genre }}</strong> • {{ movie.year }}</p>
-      <p>Average rating: {{ movie.averageRating || 'N/A' }}</p>
+      <p>Average rating: {{ movie.averageRating | number:'1.0-1' }}</p>
       <p>{{ movie.description }}</p>
     </div>
   </div>

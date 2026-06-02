@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Movie } from '../models/movie';
-import { LocalStorageService } from './local-storage.service';
+import { ReviewService } from './review.service';
 
 @Injectable({ providedIn: 'root' })
 export class MovieService {
-  constructor(private storage: LocalStorageService) {}
+  constructor(private reviewService: ReviewService) {}
 
   getMovies(): Promise<Movie[]> {
-    this.storage.seedMockReviews();
-
     return fetch('/assets/data/movies.json')
       .then(r => r.json())
       .then((movies: Movie[]) => movies.map(movie => ({
         ...movie,
-        averageRating: this.storage.getAverageRating(movie.id)
+        averageRating: this.reviewService.getAverageRating(movie.id)
       })));
   }
 }

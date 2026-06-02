@@ -6,9 +6,22 @@ import { Review } from '../models/review';
 export class ReviewService {
   private readonly reviewsKey = 'reviews';
   private readonly votedReviewIdsKey = 'voted-review-ids';
+  private readonly legacySeedReviewIds = [
+    'rvw-101',
+    'rvw-102',
+    'rvw-103',
+    'rvw-201',
+    'rvw-202',
+    'rvw-301',
+    'rvw-302',
+    'rvw-401',
+    'rvw-402',
+    'rvw-501',
+    'rvw-502'
+  ];
 
   constructor(private storage: LocalStorageService) {
-    this.seedMockReviews();
+    this.purgeLegacySeedReviews();
   }
 
   getReviews(): Review[] {
@@ -23,18 +36,19 @@ export class ReviewService {
   }
 
   getAverageRating(movieId: string | number): number {
-    const reviews = this.getReviewsForMovie(movieId);
+    const reviews = this.getReviewsForMovie(movieId).filter(review => this.isValidRating(review.rating));
     if (reviews.length === 0) {
       return 0;
     }
 
     const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-    return Math.round((total / reviews.length) * 10) / 10;
+    const average = total / reviews.length;
+    return Math.round(Math.min(5, Math.max(0, average)) * 10) / 10;
   }
 
   addReview(review: Review): void {
     const allReviews = this.getReviews();
-    allReviews.push(review);
+    allReviews.push(this.normalizeReview(review));
     this.storage.set(this.reviewsKey, allReviews);
   }
 
@@ -61,111 +75,34 @@ export class ReviewService {
     return votedReviewIds.includes(reviewId);
   }
 
-  seedMockReviews(): void {
-    if (this.getReviews().length > 0) {
-      return;
+  private isValidRating(rating: unknown): rating is number {
+    return typeof rating === 'number' && Number.isFinite(rating) && rating >= 1 && rating <= 5;
+  }
+
+  private normalizeReview(review: Review): Review {
+    const normalizedRating = this.isValidRating(review.rating) ? review.rating : 0;
+    return {
+      ...review,
+      movieId: String(review.movieId),
+      author: review.author.trim(),
+      comment: review.comment.trim(),
+      rating: normalizedRating,
+      upvotes: Number.isFinite(review.upvotes) && review.upvotes > 0 ? Math.floor(review.upvotes) : 0,
+      createdAt: review.createdAt || new Date().toISOString()
+    };
+  }
+
+  private purgeLegacySeedReviews(): void {
+    const existingReviews = this.getReviews();
+    const filteredReviews = existingReviews.filter(review => !this.legacySeedReviewIds.includes(review.id));
+    if (filteredReviews.length !== existingReviews.length) {
+      this.storage.set(this.reviewsKey, filteredReviews);
     }
 
-    this.storage.set<Review[]>(this.reviewsKey, [
-      {
-        id: 'rvw-101',
-        movieId: '1',
-        author: 'Mina',
-        rating: 5,
-        comment: 'Beautiful visuals and a surprisingly emotional ending.',
-        upvotes: 8,
-        createdAt: '2026-05-30T15:12:22+07:00'
-      },
-      {
-        id: 'rvw-102',
-        movieId: '1',
-        author: 'Jon',
-        rating: 4,
-        comment: 'The world-building is strong and the pacing stays tight.',
-        upvotes: 4,
-        createdAt: '2026-05-30T18:41:05+07:00'
-      },
-      {
-        id: 'rvw-103',
-        movieId: '1',
-        author: 'Priya',
-        rating: 5,
-        comment: 'I liked how the ending paid off every little detail.',
-        upvotes: 6,
-        createdAt: '2026-06-01T09:08:41+07:00'
-      },
-      {
-        id: 'rvw-201',
-        movieId: '2',
-        author: 'Rhea',
-        rating: 4,
-        comment: 'A tense little thriller with a great sense of place.',
-        upvotes: 6,
-        createdAt: '2026-05-30T16:23:44+07:00'
-      },
-      {
-        id: 'rvw-202',
-        movieId: '2',
-        author: 'Sam',
-        rating: 4,
-        comment: 'Solid suspense throughout and a strong lead performance.',
-        upvotes: 5,
-        createdAt: '2026-06-01T12:14:09+07:00'
-      },
-      {
-        id: 'rvw-301',
-        movieId: '3',
-        author: 'Ari',
-        rating: 4,
-        comment: 'Warm, quiet, and easy to recommend for a relaxed night.',
-        upvotes: 3,
-        createdAt: '2026-05-31T11:03:10+07:00'
-      },
-      {
-        id: 'rvw-302',
-        movieId: '3',
-        author: 'Tess',
-        rating: 4,
-        comment: 'A simple story, but it lands every emotional beat nicely.',
-        upvotes: 2,
-        createdAt: '2026-06-01T15:44:28+07:00'
-      },
-      {
-        id: 'rvw-401',
-        movieId: '4',
-        author: 'Sana',
-        rating: 5,
-        comment: 'Fast, stylish, and the action scenes are easy to follow.',
-        upvotes: 10,
-        createdAt: '2026-05-31T20:17:39+07:00'
-      },
-      {
-        id: 'rvw-402',
-        movieId: '4',
-        author: 'Lee',
-        rating: 4,
-        comment: 'It keeps the momentum going without feeling noisy or messy.',
-        upvotes: 7,
-        createdAt: '2026-06-01T18:05:13+07:00'
-      },
-      {
-        id: 'rvw-501',
-        movieId: '5',
-        author: 'Noah',
-        rating: 5,
-        comment: 'Quiet, tender, and the festival setting feels alive.',
-        upvotes: 9,
-        createdAt: '2026-06-01T10:22:56+07:00'
-      },
-      {
-        id: 'rvw-502',
-        movieId: '5',
-        author: 'Mira',
-        rating: 4,
-        comment: 'A warm family drama with a strong sense of place.',
-        upvotes: 5,
-        createdAt: '2026-06-01T20:34:17+07:00'
-      }
-    ]);
+    const votedReviewIds = this.storage.get<string[]>(this.votedReviewIdsKey, []);
+    const filteredVotedReviewIds = votedReviewIds.filter(reviewId => !this.legacySeedReviewIds.includes(reviewId));
+    if (filteredVotedReviewIds.length !== votedReviewIds.length) {
+      this.storage.set(this.votedReviewIdsKey, filteredVotedReviewIds);
+    }
   }
 }

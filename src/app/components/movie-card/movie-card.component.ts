@@ -22,8 +22,4 @@ export class MovieCardComponent implements OnInit {
 	toggleFavorite(): void {
 		this.isFavorite = this.favorites.toggle(Number(this.movie.id));
 	}
-
-	onAverageChanged(averageRating: number): void {
-		this.averageRating = averageRating;
-	}
 }
